@@ -1,19 +1,24 @@
-// Il computer deve generare 16 numeri casuali tra 1 e 100.
-// I numeri non possono essere duplicati
-
-// In seguito deve chiedere all’utente (100 - 16) volte di inserire un numero alla volta, sempre compreso tra 1 e 100.
-// L’utente non può inserire più volte lo stesso numero.
-
-// Se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti si continua chiedendo all’utente un altro numero.
-
-// La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
-
-// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
-
 const numeroBombe = 16;
-var max = 100;  // range di numeri
-var nuovoNumero , i = 0 , utenteVivo = true , arrayNumeriCasuali = [] , arrayNumeriUtente = [];
+var nuovoNumero , i = 0 , utenteVivo = true , difficolta , max , arrayNumeriCasuali = [] , arrayNumeriUtente = [];
 
+while ( ( difficolta != 0 ) && ( difficolta != 1 ) && ( difficolta != 2 ) )
+    difficolta = prompt("Scegli un livello di difficoltà fra 0 , 1 e 2");
+
+switch(difficolta) {
+    case "0" :
+        max = 100;
+        break;            
+
+    case "1" :
+        max = 80;
+        break;            
+    
+    case "2" :
+        max = 50;
+        break;            
+}
+
+alert("Hai Scelto il livello di difficoltà "+difficolta+".\nIl range di numeri andrà da 1 a "+max);
 
 for (i = 0; i < numeroBombe; i++ ) {
     do
@@ -34,17 +39,22 @@ while ( i < ( max - numeroBombe) && (utenteVivo == true) ) {
     arrayNumeriUtente.push(nuovoNumero);
     
     if (isInArray(nuovoNumero,arrayNumeriCasuali)) {
-        console.log("Sei morto al tentativo numero "+(i));
+        alert("Sei morto al tentativo n."+(i));
         utenteVivo = false;
     }    
 }
 
-if (utenteVivo == true)
-    console.log("Hai completato il gioco senza commettere errori: sei proprio un grande!");
+var punteggio = Math.floor(((i-1)*10)*(100/max));   
+// Il pungeggio tiene conto del numero di tentativi e del livello di difficoltà scelto
 
-console.log("In questa partita hai totalizzato complessivamente "+((i-1)*10)+" punti."); // 1 tentativo = 10 punti
-console.log("I numeri casuali erano: "+arrayNumeriCasuali);
-console.log("I numeri scelti da te sono: "+arrayNumeriUtente);
+if (utenteVivo == true) {
+    alert("Hai completato il gioco senza commettere errori: sei proprio un grande!");
+    punteggio+=100; // Bonus di 100 punti se l'utente arriva fino alla fine
+}
+
+alert("In questa partita hai totalizzato complessivamente "+punteggio+" punti.");
+alert("I numeri casuali erano: "+arrayNumeriCasuali);
+alert("I numeri scelti da te sono stati: "+arrayNumeriUtente);
 
 //  --- Fine Programma  ---
 
@@ -63,7 +73,7 @@ function isInArray(valore , array) {
 function isLegalNumber(valore , max , array) {
     // Questa funzione controlla se un valore rispetta le condizioni richieste
     if (isNaN(valore)) {
-        // Se è un numero valido
+        // Se è un numero
         alert("ERRORE: Hai inserito un valore non numerico. Riprova.")
         return false;
     }
