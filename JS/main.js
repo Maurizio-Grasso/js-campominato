@@ -17,27 +17,20 @@ var nuovoNumero , i = 0 , utenteVivo = true , arrayNumeriCasuali = [] , arrayNum
 
 for (i = 0; i < numeroBombe; i++ ) {
     do
-        nuovoNumero = generateRandom(max);
+        nuovoNumero = Math.floor(Math.random() * max + 1);
     while (isInArray(nuovoNumero,arrayNumeriCasuali));
-    arrayNumeriCasuali.push(nuovoNumero);    
+    arrayNumeriCasuali.push(nuovoNumero);
 }   // Ha generato i 16 numeri casuali per il computer
-
-
-console.log("I numeri casuali erano i seguenti: "+arrayNumeriCasuali);  // DEBUG
-
 
 i=0;    // Reset i
 
 while ( i < ( max - numeroBombe) && (utenteVivo == true) ) {
 
-    nuovoNumero = prompt("("+(i+1)+" di "+max+") Inserisci un numero da 1 a 100:");
-    
-    while (isInArray(nuovoNumero,arrayNumeriUtente)) {
-        nuovoNumero = prompt("Avevi già scelto il numero "+nuovoNumero+". Per favore, riprova.");
-    }
+    do
+        nuovoNumero = prompt("("+(i+1)+" di "+max+") Inserisci un numero da 1 a 100:");
+    while (isLegalNumber(nuovoNumero , max , arrayNumeriUtente) == false)
 
     i++;
-
     arrayNumeriUtente.push(nuovoNumero);
     
     if (isInArray(nuovoNumero,arrayNumeriCasuali)) {
@@ -46,24 +39,43 @@ while ( i < ( max - numeroBombe) && (utenteVivo == true) ) {
     }    
 }
 
-if (utenteVivo == true) {
-    console.log("Hai completato il gioco senza commettere errori!");
-}
+if (utenteVivo == true)
+    console.log("Hai completato il gioco senza commettere errori: sei proprio un grande!");
 
 console.log("In questa partita hai totalizzato complessivamente "+((i-1)*10)+" punti."); // 1 tentativo = 10 punti
-console.log("I numeri casuali erano i seguenti: "+arrayNumeriCasuali);
-console.log("I numeri scelti da te sono i seguenti: "+arrayNumeriUtente);
+console.log("I numeri casuali erano: "+arrayNumeriCasuali);
+console.log("I numeri scelti da te sono: "+arrayNumeriUtente);
+
+//  --- Fine Programma  ---
 
 
-function generateRandom(max) {
-    var numeroCasuale = Math.floor(Math.random() * max + 1);
-    return numeroCasuale;
-}
+//  --- Definizione Funzioni  ---
 
 function isInArray(valore , array) {
+    // Questa funzione controlla se un dato numero è presente in un array (true) o meno (false)
     for (var i = 0; i < array.length; i++) {
         if ( valore == array[i] )
             return true;
     }
     return false;
+}
+
+function isLegalNumber(valore , max , array) {
+    // Questa funzione controlla se un valore rispetta le condizioni richieste
+    if (isNaN(valore)) {
+        // Se è un numero valido
+        alert("ERRORE: Hai inserito un valore non numerico. Riprova.")
+        return false;
+    }
+    if ((valore <= 0) || (valore > max)) {
+        // Se è compreso fra un minimo ed un massimo
+        alert("ERRORE: Il valore deve essere compreso fra 1 e "+max+" . Riprova.")
+        return false;
+    }
+    if (isInArray(valore,array)) {
+        // Se era già stato inserito in precedenza
+        alert("ERRORE: Avevi già scelto il numero "+valore+" in precedenza. Per favore, riprova.");
+        return false;
+    }
+    return true;
 }
