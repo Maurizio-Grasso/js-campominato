@@ -1,65 +1,105 @@
 const numeroBombe = 16;
-var nuovoNumero , i = 0 , utenteVivo = true , difficolta , max , arrayNumeriCasuali = [] , arrayNumeriUtente = [];
 
-while ( ( difficolta != 0 ) && ( difficolta != 1 ) && ( difficolta != 2 ) )
-    difficolta = prompt("Scegli un livello di difficoltà fra 0 , 1 e 2");
+var arrayNumeriCasuali = [] , arrayNumeriUtente = [];
+var nuovoNumero , i, punteggio = 0 , difficolta , max, celleMancanti;
+
+while ( ( difficolta != 0 ) && ( difficolta != 1 ) && ( difficolta != 2 ) || ( difficolta == "" ))
+  difficolta = prompt("Scegli un livello di difficoltà fra 0 , 1 e 2");
 
 switch(difficolta) {
     case "0" :
         max = 100;
-        break;            
-
+        break;
     case "1" :
         max = 80;
-        break;            
-    
+        break;
     case "2" :
         max = 50;
-        break;            
+        break;
 }
 
 alert("Hai Scelto il livello di difficoltà "+difficolta+".\nIl range di numeri andrà da 1 a "+max);
+celleMancanti = max - numeroBombe;
 
-for (i = 0; i < numeroBombe; i++ ) {
+document.getElementById("celle-mancanti-text").innerHTML = celleMancanti;
+
+for (i = 0; i < numeroBombe; i++ ) {    
     do
         nuovoNumero = Math.floor(Math.random() * max + 1);
     while (isInArray(nuovoNumero,arrayNumeriCasuali));
     arrayNumeriCasuali.push(nuovoNumero);
 }   // Ha generato i 16 numeri casuali per il computer
 
-i=0;    // Reset i
+for (i = 1; i <= max; i++ )
+    document.getElementById("inner-field").innerHTML += '<li id="single-cell-'+i+'">'+i+'</li>';
+   // Ha popolato la lista nell'HTML
 
-while ( i < ( max - numeroBombe) && (utenteVivo == true) ) {
+for (i = 1; i <= max; i++ )
+        document.getElementById("single-cell-"+i).onclick = function() { scopriCella(this.innerHTML) }; 
+   // Ha assegnato l'onclick
 
-    do
-        nuovoNumero = prompt("("+(i+1)+" di "+max+") Inserisci un numero da 1 a 100:");
-    while (isLegalNumber(nuovoNumero , max , arrayNumeriUtente) == false)
+   aggiornaPunteggio(0);    // Stampa Punteggio nell'HTML
+   
+   document.getElementById("face-img").src ="img/happy.png";
+   //  --- Fine Programma  ---
+   
+   
+   //  --- Definizione Funzioni  ---
 
-    i++;
-    arrayNumeriUtente.push(nuovoNumero);
-    
-    if (isInArray(nuovoNumero,arrayNumeriCasuali)) {
-        alert("Sei morto al tentativo n."+(i));
-        utenteVivo = false;
-    }    
+function scopriCella(cella) {   
+    if ( (isInArray(cella,arrayNumeriCasuali)) || (celleMancanti==0) )
+        gameOver();
+    else if (!isInArray(cella,arrayNumeriCasuali)) {
+        document.getElementById("single-cell-"+cella).classList = "not-bomb";
+        aggiornaPunteggio(10);
+        removeOnClick(cella);   // Rimuove Onclick dalla Cella
+        celleMancanti--;
+        document.getElementById("celle-mancanti-text").innerHTML = celleMancanti;
+    }
 }
 
-var punteggio = Math.floor(((i-1)*10)*(100/max));   
-// Il pungeggio tiene conto del numero di tentativi e del livello di difficoltà scelto
+function gameOver() {    
+    // Scopri tutte le bombe
+    for( i = 0; i < arrayNumeriCasuali.length; i++)
+        document.getElementById("single-cell-"+arrayNumeriCasuali[i]).classList = "bomb-here";
 
-if (utenteVivo == true) {
-    alert("Hai completato il gioco senza commettere errori: sei proprio un grande!");
-    punteggio+=100; // Bonus di 100 punti se l'utente arriva fino alla fine
+    removeOnClick(-1);  //Rimuovi onclick
+
+    document.getElementById("face-img").src ="img/sad.png"; // Faccina Triste
+
+
+
+    if (celleMancanti==0) {
+        alert("Hai completato il gioco senza Errori.\nQuesto ti fa guadagnare 100 punti bonus!");
+        aggiornaPunteggio(100);
+    }
+    else
+        alert("Oh, no, hai centrato una bomba. Peccato: ti mancavano soltanto "+celleMancanti+" celle da scoprire.");
+
+    alert("In questa partita hai totalizzato "+punteggio+" punti.");
+       
 }
 
-alert("In questa partita hai totalizzato complessivamente "+punteggio+" punti.");
-alert("I numeri casuali erano: "+arrayNumeriCasuali);
-alert("I numeri scelti da te sono stati: "+arrayNumeriUtente);
+function aggiornaPunteggio(valore) {
+    // Il punteggio tiene conto del numero di celle scoperte e del coefficiente di difficoltà
+    punteggio += Math.floor(valore * (100/max));    // Incrementa Punteggio
+    document.getElementById("punteggio-text").innerHTML = punteggio;    // Stampa nell'Html
+}
 
-//  --- Fine Programma  ---
+function removeOnClick (valore) {
 
-
-//  --- Definizione Funzioni  ---
+    if (valore == -1 ) {
+        // Rimuovo onclick da tutto
+        for (i=1; i<=max; i++) {
+            document.getElementById("single-cell-"+i).style = "cursor:default;"; 
+            document.getElementById("single-cell-"+i).onclick = null; 
+        }
+    }
+    else {
+        document.getElementById("single-cell-"+valore).style = "cursor:default;"; 
+        document.getElementById("single-cell-"+valore).onclick = null; 
+    }
+}
 
 function isInArray(valore , array) {
     // Questa funzione controlla se un dato numero è presente in un array (true) o meno (false)
@@ -70,22 +110,7 @@ function isInArray(valore , array) {
     return false;
 }
 
-function isLegalNumber(valore , max , array) {
-    // Questa funzione controlla se un valore rispetta le condizioni richieste
-    if (isNaN(valore)) {
-        // Se è un numero
-        alert("ERRORE: Hai inserito un valore non numerico. Riprova.")
-        return false;
-    }
-    if ((valore <= 0) || (valore > max)) {
-        // Se è compreso fra un minimo ed un massimo
-        alert("ERRORE: Il valore deve essere compreso fra 1 e "+max+" . Riprova.")
-        return false;
-    }
-    if (isInArray(valore,array)) {
-        // Se era già stato inserito in precedenza
-        alert("ERRORE: Avevi già scelto il numero "+valore+" in precedenza. Per favore, riprova.");
-        return false;
-    }
-    return true;
-}
+document.getElementById("restart-game").addEventListener('click' , function()  { 
+    location.reload();
+        } 
+    );

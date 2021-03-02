@@ -5,8 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campo Minato</title>
+
+    <!-- Google Font Orbitron -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet"> 
+
+    <!-- Some Style -->
+    <link rel="stylesheet" href="css/boolstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
+
+    <div class="flex-wrapper outer-wrapper">
+
+      <header>
+
+        <div class="inner-container text-center">
+          
+          <div class="celle-mancanti set-relative">
+            <span>Celle Rimanenti</span>
+            <span id="celle-mancanti-text" class="align-x-y"></span>
+          </div>
+
+          <div class="face-container">
+            <img id="face-img" src="" alt="">
+          </div>
+          
+          <div class="punteggio set-relative">
+            <span>Punteggio Attuale</span>
+            <span id="punteggio-text" class="align-x-y"></span>
+          </div>
+
+        </div>  <!-- Inner Container header END-->
+
+      </header>
+
+      <main>
+        <ul id="inner-field" class="inline-list clearfix">
+                <!-- Populated via JS -->
+        </ul>
+      </main>
+
+      <footer>
+        <div class="inner-container text-center">
+          <button id="restart-game">Ricomincia</button>
+        </div>
+      </footer>
+
+    </div>  <!-- Outer Wrapper END -->
+
+    <!-- Javascript -->
     <script src="JS/main.js"></script>
 </body>
 </html>

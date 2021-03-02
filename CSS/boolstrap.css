@@ -1,0 +1,160 @@
+/*  BoolStrap v.0.0.1 Beta */
+
+/*
+################
+Reset & Defaults
+################
+*/
+
+:root {
+    font-size: 10px; 
+    
+    --color-primary: black;
+    --color-bg: white;
+
+    --standard-spacing: 1rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+body {
+    color: var(--color-primary);
+    background-color: var(--color-bg);
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/*
+######
+Layout
+######
+*/
+
+.flex-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.outer-wrapper {
+    min-height: 100vh;
+    max-width: 800px;  /* Set max width of the whole content */
+    margin: auto;
+}
+
+.container-fluid {
+    width:100%;
+    margin:auto;
+}
+
+/*
+#######
+Spacing
+#######
+*/
+
+.padding-standard { padding: var(--standard-spacing);}
+.padding-t-standard { padding-top: var(--standard-spacing);}
+.padding-r-standard { padding-right: var(--standard-spacing);}
+.padding-b-standard { padding-bottom: var(--standard-spacing);}
+.padding-l-standard { padding-left: var(--standard-spacing);}
+
+.margin-standard { margin: var(--standard-spacing);}
+.margin-t-standard { margin-top: var(--standard-spacing);}
+.margin-r-standard { margin-right: var(--standard-spacing);}
+.margin-b-standard { margin-bottom: var(--standard-spacing);}
+.margin-l-standard { margin-left: var(--standard-spacing);}
+
+/*
+###########
+Positioning
+###########
+*/
+
+.set-relative {
+    position: relative;
+}
+
+.align-y {
+    /* Parent must be relative*/
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.align-x-y {
+    /* Parent must be relative*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
+
+/*
+##########
+Typography
+##########
+*/
+
+h1 ,
+h2 ,
+h3 {
+    font-weight: 700; 
+}
+
+h1 { 
+    font-size: 3.5rem; 
+    line-height: 4.5rem;
+}
+
+h2 { 
+    font-size: 2.6rem; 
+    line-height: 3rem;
+}
+
+h3 { 
+    font-size: 2.1rem; 
+    line-height: 2.5rem;
+}
+
+h4 { font-size: 1.8rem; }
+h5 { font-size: 1.6rem; }
+h6 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: var(--standard-spacing);
+    margin-top: var(--standard-spacing);
+}
+
+/*
+#########
+Utilities
+#########
+*/
+
+.text-center {    text-align: center; }
+.text-left {    text-align: left; }
+.text-right {    text-align: right; }
+
+.text-primary {    color: var(--color-primary); }
+
+.inline-list li {    display: inline-block; }

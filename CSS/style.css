@@ -1,0 +1,88 @@
+:root {
+    --color-bg: white;
+}
+
+body {
+    color: gray; /* debug */
+    background-color: lightgray;
+}
+
+.flex-wrapper {
+  justify-content: space-between;
+  align-items: stretch;
+}
+.outer-wrapper {
+    background-color: white;
+}
+
+
+header {
+    border-bottom: 1px solid lightgray;;
+}
+
+
+header .inner-container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#celle-mancanti-text ,
+#punteggio-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 30px;
+}
+
+
+header .inner-container div {
+    min-height: 80px;
+    flex: 1 1 auto;
+}
+
+header .face-container img {
+    max-height: 75px;
+}
+
+#inner-field {
+    max-width: 500px;
+    margin: auto;
+}
+
+#inner-field li {
+    cursor: pointer;
+    color: white;
+    width: 50px;
+    height: 50px;
+    float:left;
+    line-height: 50px;
+    background-color: lightgray;
+    
+    border: 1px solid white;
+    text-align: center;
+    
+}
+
+.bomb-here {
+    background-color: red !important;
+    background-image: url("../img/bomb.png");
+    background-size: cover;
+}
+
+.not-bomb {
+    background-color: green !important;
+}
+
+footer {
+    border-top: 1px solid lightgray;;
+}
+
+footer .inner-container {
+    padding: 20px 0;
+}
+
+footer button {
+    padding: 15px 25px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 5px;
+}
