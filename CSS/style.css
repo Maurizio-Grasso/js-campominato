@@ -1,43 +1,34 @@
 :root {
-    --color-bg: white;
+    --color-bg: lightgray;
 }
 
 body {
     color: gray; /* debug */
-    background-color: lightgray;
 }
 
 .flex-wrapper {
   justify-content: space-between;
   align-items: stretch;
+  background-color: white;
 }
-.outer-wrapper {
-    background-color: white;
-}
-
-
-header {
-    border-bottom: 1px solid lightgray;;
-}
-
 
 header .inner-container {
-    padding: 20px 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid lightgray;
+}
+
+header .inner-container div {
+    min-height: 80px;
+    flex: 1 1 auto;
 }
 
 #celle-mancanti-text ,
 #punteggio-text {
     font-family: 'Orbitron', sans-serif;
     font-size: 30px;
-}
-
-
-header .inner-container div {
-    min-height: 80px;
-    flex: 1 1 auto;
 }
 
 header .face-container img {
@@ -49,6 +40,12 @@ header .face-container img {
     margin: auto;
 }
 
+/*
+#######
+M A I N
+#######
+*/
+
 #inner-field li {
     cursor: pointer;
     color: white;
@@ -56,28 +53,28 @@ header .face-container img {
     height: 50px;
     float:left;
     line-height: 50px;
-    background-color: lightgray;
-    
-    border: 1px solid white;
-    text-align: center;
-    
+    background-color: lightgray;    
+    border: 1px solid white;    
 }
 
-.bomb-here {
-    background-color: red !important;
+#inner-field li.bomb-here {
+    background-color: red;
     background-image: url("../img/bomb.png");
     background-size: cover;
 }
 
-.not-bomb {
-    background-color: green !important;
+#inner-field li.not-bomb {
+    background-color: green;
 }
 
-footer {
-    border-top: 1px solid lightgray;;
-}
+/*
+###########
+F O O T E R
+###########
+*/
 
 footer .inner-container {
+    border-top: 1px solid lightgray;
     padding: 20px 0;
 }
 

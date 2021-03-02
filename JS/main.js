@@ -3,8 +3,13 @@ const numeroBombe = 16;
 var arrayNumeriCasuali = [] , arrayNumeriUtente = [];
 var nuovoNumero , i, punteggio = 0 , difficolta , max, celleMancanti;
 
+document.getElementById("restart-game").addEventListener('click' , function()  { 
+    location.reload();
+        } 
+    );  // Assegna evento al Pulsante Reload
+
 while ( ( difficolta != 0 ) && ( difficolta != 1 ) && ( difficolta != 2 ) || ( difficolta == "" ))
-  difficolta = prompt("Scegli un livello di difficoltà fra 0 , 1 e 2");
+  difficolta = prompt("Scegli un livello di difficoltà fra 0 , 1 e 2"); // Ha chiesto il grado di difficoltà
 
 switch(difficolta) {
     case "0" :
@@ -18,29 +23,26 @@ switch(difficolta) {
         break;
 }
 
-alert("Hai Scelto il livello di difficoltà "+difficolta+".\nIl range di numeri andrà da 1 a "+max);
-celleMancanti = max - numeroBombe;
-
-document.getElementById("celle-mancanti-text").innerHTML = celleMancanti;
+celleMancanti = max - numeroBombe;  // Inizializza celle mancanti
 
 for (i = 0; i < numeroBombe; i++ ) {    
     do
-        nuovoNumero = Math.floor(Math.random() * max + 1);
+    nuovoNumero = Math.floor(Math.random() * max + 1);
     while (isInArray(nuovoNumero,arrayNumeriCasuali));
     arrayNumeriCasuali.push(nuovoNumero);
 }   // Ha generato i 16 numeri casuali per il computer
 
-for (i = 1; i <= max; i++ )
-    document.getElementById("inner-field").innerHTML += '<li id="single-cell-'+i+'">'+i+'</li>';
-   // Ha popolato la lista nell'HTML
+for (i = 1; i <= max; i++ ) // Popola la lista nell'HTML
+document.getElementById("inner-field").innerHTML += '<li id="single-cell-'+i+'">'+i+'</li>';
 
-for (i = 1; i <= max; i++ )
-        document.getElementById("single-cell-"+i).onclick = function() { scopriCella(this.innerHTML) }; 
-   // Ha assegnato l'onclick
+for (i = 1; i <= max; i++ ) // Assegna onclick ad ogni <li>
+document.getElementById("single-cell-"+i).onclick = function() { scopriCella(this.innerHTML) }; 
 
-   aggiornaPunteggio(0);    // Stampa Punteggio nell'HTML
-   
-   document.getElementById("face-img").src ="img/happy.png";
+aggiornaPunteggio(0);    // Inizializza punteggio nell'html
+alert("Hai Scelto il livello di difficoltà "+difficolta+".\nIl range di numeri andrà da 1 a "+max);
+document.getElementById("celle-mancanti-text").innerHTML = celleMancanti;   // Inizializza celle mancanti nell'html
+document.getElementById("face-img").src ="img/happy.png";    // Inizializza faccina nell'html
+
    //  --- Fine Programma  ---
    
    
@@ -59,15 +61,12 @@ function scopriCella(cella) {
 }
 
 function gameOver() {    
-    // Scopri tutte le bombe
-    for( i = 0; i < arrayNumeriCasuali.length; i++)
+    
+    for( i = 0; i < arrayNumeriCasuali.length; i++) // Scopri tutte le bombe
         document.getElementById("single-cell-"+arrayNumeriCasuali[i]).classList = "bomb-here";
 
     removeOnClick(-1);  //Rimuovi onclick
-
     document.getElementById("face-img").src ="img/sad.png"; // Faccina Triste
-
-
 
     if (celleMancanti==0) {
         alert("Hai completato il gioco senza Errori.\nQuesto ti fa guadagnare 100 punti bonus!");
@@ -75,7 +74,6 @@ function gameOver() {
     }
     else
         alert("Oh, no, hai centrato una bomba. Peccato: ti mancavano soltanto "+celleMancanti+" celle da scoprire.");
-
     alert("In questa partita hai totalizzato "+punteggio+" punti.");
        
 }
@@ -109,8 +107,3 @@ function isInArray(valore , array) {
     }
     return false;
 }
-
-document.getElementById("restart-game").addEventListener('click' , function()  { 
-    location.reload();
-        } 
-    );
